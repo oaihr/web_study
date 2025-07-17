@@ -145,14 +145,17 @@ public class Cookie01controller {
 		
 		
 		//아이디 기억 체크 여부 확인 -> 체크 O -> 쿠키에 아이디를 저장해두자~
-		if(remember == null) { // 아이디 기억 체크 X
+		if( remember == null ) {  //아이디 기억 체크 X
+			//기억하지 않겠다! -> 쿠키 값 삭제!
+			Cookie ck = MyCookieUtil.createCookieForRemove("remember");
+			response.addCookie(ck);
+			 
+		} else {   //아이디 기억 체크 O -> 쿠키에 저장
 			
-		}else { // 아이디 기억 체크 O -> 쿠키에 저장
-			
-			//boolean isRememeber = Boolean.parseBoolean(remember); // String -> boolean
+			boolean isRemember = Boolean.parseBoolean(remember); //String -> boolean
 			//if(remember.equals("true"))
 			
-			//쿠키에 id 값 저장
+			//id 값
 			Cookie ck = MyCookieUtil.createCookie("remember", id, 3600);
 			response.addCookie(ck);
 			
