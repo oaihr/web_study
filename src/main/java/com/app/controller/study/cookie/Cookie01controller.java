@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import com.app.util.MyCookieUtil;
 
@@ -112,6 +113,53 @@ public class Cookie01controller {
 		return "cookie/readCookie";
 	}
 	
+	//*** Cookie 활용 아이디 기억
+	@GetMapping("/idCookie")
+	public String idCookie(HttpServletRequest request) {
+		//쿠키에서 remember 값이 있는지 체크!
+		// 있으면? 아이디 기억 -> 화면에 표시
+		// 없으면? 그냥 패스
+		String remember = MyCookieUtil.getCookie(request, "remember");
+		if( remember != null) {
+			request.setAttribute("remember", remember);
+		}
+		return "cookie/idCookie";
+	}
 	
-	
+	@PostMapping("/idCookie")
+	public String idCookieAction(HttpServletRequest request, HttpServletResponse response) {
+		
+		// 로직 처리.. 
+		System.out.println(request.getParameter("id"));
+		System.out.println(request.getParameter("pw"));
+		System.out.println(request.getParameter("remember"));
+		
+		String id = request.getParameter("id");
+		String remember = request.getParameter("remember");
+		
+		// 로그인 로직
+		// 입력 유효성 검증
+		// id pw <--> DB저장 데이터
+		// 맞으면? 로그인 성공 -> 성공시 넘어갈 페이지로 이동
+		// 틀리면? 로그인 실패 -> 다시 로그인 화면
+		
+		
+		//아이디 기억 체크 여부 확인 -> 체크 O -> 쿠키에 아이디를 저장해두자~
+		if(remember == null) { // 아이디 기억 체크 X
+			
+		}else { // 아이디 기억 체크 O -> 쿠키에 저장
+			
+			//boolean isRememeber = Boolean.parseBoolean(remember); // String -> boolean
+			//if(remember.equals("true"))
+			
+			//쿠키에 id 값 저장
+			Cookie ck = MyCookieUtil.createCookie("remember", id, 3600);
+			response.addCookie(ck);
+			
+		}
+		
+		// 로그인 처리가 완료된 후에 보여줄 페이지 이동
+		//return "cookie/readCookie";	//view 자원의 경로
+		return "redirect:/readCookie";	//url mapping 경로
+	}
 }
