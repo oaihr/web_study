@@ -3,4 +3,29 @@
 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 xsi:schemaLocation="http://www.springframework.org/schema/beans
 http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+<!-- 	ioc 컨테이너에 빈 등록 -->
+<!-- 	roomDAO bean 등록 -->
+
+	<!-- RoomDAO roomDAO = new RoomDAOImpl() -->
+<!-- 	<bean id="roomDAO" class="com.app.dao.room.impl.RoomDAOImpl"></bean> -->
+	
+	
+	<!-- RoomService 등록 -->
+	
+	<!-- RoomService roomService = new RoomServiceImpl() -->
+<!-- 	<bean id="roomService" class="com.app.service.room.impl.RoomServiceImpl"> -->
+		<!-- 1. 생성자를 통한 의존성 주입 -->
+		<!-- RoomService roomService = new RoomServiceImpl(roomDAO) -->
+<!-- 		<constructor-arg ref="roomDAO"></constructor-arg> -->
+		
+		<!-- 2. setter 메소드를 통한 의존성 주입 -->
+		<!-- 
+			RoomService roomService = new RoomServiceImpl();
+			roomService.setRoomDAO(roomDAO);
+		-->
+<!-- 		<property name="roomDAO" ref="roomDAO"></property>	 -->
+<!-- 	</bean> -->
+	
 </beans>

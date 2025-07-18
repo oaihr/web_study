@@ -16,6 +16,7 @@ public class RoomDAOImpl implements RoomDAO{
 	@Override
 	public List<Room> findRoomList() {
 		
+		System.out.println("[DAO] 호출 findRoomList");
 		// DB에서 room 데이터 조회 -> List
 		
 		return null;
