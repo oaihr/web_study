@@ -61,6 +61,11 @@ https://mvnrepository.com/artifact/org.springframework/spring-webmvc -->
 			<version>5.3.27</version>
 		</dependency>
 
-
+		<!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.18.38</version>
+		</dependency>
 	</dependencies>
 </project>
