@@ -2,6 +2,8 @@ package com.app.controller.admin;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -69,7 +71,17 @@ public class AdminController {
 		return "admin/room";
 	}
 	
-	
+	// /admin/removeRoom?roomId=2
+	@GetMapping("/admin/removeRoom")
+	public String removeRoom(HttpServletRequest request) {
+		
+		String roomId = request.getParameter("roomId");
+		
+		int result = roomService.removeRoom(Integer.parseInt(roomId));
+		
+		//if(result > 0)
+		return "redirect:/admin/rooms";
+	}
 	
 	//관리자가 사용자계정관리 -> 사용자 계정을 추가
 	@GetMapping("/admin/users/add")
