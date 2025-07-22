@@ -20,4 +20,9 @@
 		SELECT * FROM T_ROOM
 		ORDER BY room_id
 	</select>
+	
+	<select id="findRoomByRoomId" parameterType="int" resultType="Room">
+		SELECT * FROM T_ROOM
+		WHERE room_id = #{roomID}
+	</select>
 </mapper>

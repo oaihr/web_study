@@ -11,14 +11,18 @@
 	<h1>관리자 페이지</h1>
 	<h2>rooms 객실 목록</h2>
 	<c:forEach var="room" items="${roomList}">
-		<p>${room.roomId} ${room.buildingName} ${room.roomNumber} ${room.floor} ${room.maxGuestCount}
+			<p>
+				<a href="/admin/room/${room.roomId}">
+					${room.roomId} ${room.buildingName} ${room.roomNumber} ${room.floor} ${room.maxGuestCount}
+					
+					<c:choose>
+						<c:when test="${room.viewType == 'OCN' }">오션뷰</c:when>
+						<c:when test="${room.viewType == 'CTY' }">시티뷰</c:when>
+						<c:when test="${room.viewType == 'MOT' }">마운틴뷰</c:when>
+					</c:choose>
+				</a>
+			</p>
 		
-		<c:choose>
-			<c:when test="${room.viewType == 'OCN' }">오션뷰</c:when>
-			<c:when test="${room.viewType == 'CTY' }">시티뷰</c:when>
-			<c:when test="${room.viewType == 'MOT' }">마운틴뷰</c:when>
-		</c:choose>
-		</p>
 	</c:forEach>
 </body>
 </html>
