@@ -74,9 +74,9 @@ public class AdminController {
 		//사용자 저장용 서비스 메서드 활용
 		int result = userService.saveCustomerUser(user);
 		
-		if(result > 0) {			
-			return "redirect:/admin/users/add";
-		} else {
+		if(result > 0) { //정상 저장 처리			
+			return "redirect:/admin/users";
+		} else { 
 			return "admin/fail";
 		}
 	}
