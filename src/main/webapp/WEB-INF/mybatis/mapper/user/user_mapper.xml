@@ -16,4 +16,16 @@
 	<select id="findUserList" resultType="User">
 		SELECT * FROM T_USER
 	</select>
+	
+	<select id="findUserById" resultType="User" parameterType="String">
+		SELECT *
+		FROM T_USER
+		WHERE id=#{id}
+	</select>
+	
+	<select id="findUserByUserInfo" resultType="User" parameterType="User">
+		SELECT *
+		FROM T_USER
+		WHERE id=#{id} AND pw=#{pw} AND user_type=#{userType}
+	</select>
 </mapper>
