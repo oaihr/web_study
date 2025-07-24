@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import com.app.dto.user.User;
+import com.app.dto.user.UserSearchCondition;
 
 public interface UserDAO {
 	
@@ -19,4 +20,6 @@ public interface UserDAO {
 	public int modifyUserPw(User user);
 
 	public int modifyUserInfo(User user);
+
+	public List<User> findUserListBySearchCondition(UserSearchCondition userSearchCondition);
 }

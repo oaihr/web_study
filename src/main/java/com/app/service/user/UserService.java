@@ -2,9 +2,8 @@ package com.app.service.user;
 
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
-
 import com.app.dto.user.User;
+import com.app.dto.user.UserSearchCondition;
 
 public interface UserService {
 	
@@ -22,4 +21,6 @@ public interface UserService {
 	public int modifyUserPw(User user);
 
 	public int modifyUserInfo(User user);
+	
+	public List<User> findUserListBySearchCondition(UserSearchCondition userSearchCondition);
 }
