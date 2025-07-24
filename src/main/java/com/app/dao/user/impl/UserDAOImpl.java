@@ -47,6 +47,12 @@ public class UserDAOImpl implements UserDAO{
 		return result;
 	}
 
+	@Override
+	public int modifyUserInfo(User user) {
+		int result = sqlSessionTemplate.update("user_mapper.modifyUserInfo", user);
+		return result;
+	}
+
 
 
 }
