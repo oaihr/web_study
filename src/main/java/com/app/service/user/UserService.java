@@ -2,6 +2,8 @@ package com.app.service.user;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import com.app.dto.user.User;
 
 public interface UserService {
@@ -16,4 +18,6 @@ public interface UserService {
 	public User findUserById(String id);
 	
 	public User checkUserLogin(User user);
+
+	public int modifyUserPw(User user);
 }

@@ -2,6 +2,8 @@ package com.app.service.user.impl;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -87,6 +89,13 @@ public class UserServiceImpl implements UserService {
 		
 		User loginUser = userDAO.checkUserLogin(user);
 		return loginUser; //조회O: 객체, 조회X: null
+	}
+
+	@Override
+	public int modifyUserPw(User user) {
+		
+		int result = userDAO.modifyUserPw(user);
+		return result;
 	}
 }
 

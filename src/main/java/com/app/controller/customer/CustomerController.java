@@ -100,4 +100,31 @@ public class CustomerController {
 		return "redirect:/main";
 	}
 	
+	@GetMapping("/customer/modifyPw")
+	public String modifyPw() {
+		return "customer/modifyPw";
+	}
+	
+	@PostMapping("/customer/modifyPw")
+	public String modifyPwAction(User user, HttpSession session) {
+		
+		//view form에서 전달된 pw만 있지만 -> User 객체로 받음
+		
+		// 비밀번호 변경 처리(user를 넘김)	Service -> DAO -> mapper sql
+		// set pw = ?
+		// where id = ? (id값도 넘겨야함)		
+		// 특정 id의 비밀번호만 변경
+		String loginUserId = (String)session.getAttribute("loginUserId");
+		user.setId(loginUserId);
+		
+		System.out.println("비밀번호 변경에 사용할 user 객체");
+		System.out.println(user);
+		
+		int result = userService.modifyUserPw(user);
+		if(result > 0) { //성공
+			return "redirect:/customer/mypage";
+		} 
+		return "customer/modifyPw";
+	}
+	
 }
