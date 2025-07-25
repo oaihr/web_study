@@ -14,6 +14,17 @@
 	<button type="button" id="btn_registerRoom">객실 추가하기</button>
 	<br>
 	<br>
+	<h2>사용자 목록 조회</h2>
+	<div>
+		<form action="" method="get">
+			<label>오션뷰<input type="radio" name="viewType" value="OCN" <c:if test="${roomSearchCondition.viewType == 'OCN' }">checked</c:if>></label>
+			<label>시티뷰<input type="radio" name="viewType" value="CTY" <c:if test="${roomSearchCondition.viewType == 'CTY' }">checked</c:if>></label> 
+			<label>마운틴뷰<input type="radio" name="viewType" value="MOT" <c:if test="${roomSearchCondition.viewType == 'MOT' }">checked</c:if>></label><br>  
+			<label>검색어(건물이름): <input type="text" name="searchKeyword" value="${roomSearchCondition.searchKeyword}"></label>
+			<button type="submit">검색</button>
+		</form>
+	</div>
+	<hr>
 	<c:forEach var="room" items="${roomList}">
 			<p>
 				<a href="/admin/room/${room.roomId}">
