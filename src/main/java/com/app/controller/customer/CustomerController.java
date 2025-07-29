@@ -19,6 +19,9 @@ import com.app.dto.user.UserDupCheck;
 import com.app.service.user.UserService;
 import com.app.util.LoginManager;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Controller
 public class CustomerController {
 	
@@ -71,6 +74,8 @@ public class CustomerController {
 								// 자동으로 객체 형태로 파싱되서 데이터가 담겨진다.
 		System.out.println("/customer/checkDupIdJson");
 		System.out.println(userDupCheck);
+		
+		log.info("checkDupIdJson 아이디 중복체크 : {}", userDupCheck);
 		
 		//처리 로직
 		//클라이언트에서 보낸 데이터가 중복된 사용자 아이디인지 체크

@@ -2,8 +2,6 @@ package com.app.service.user.impl;
 
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +11,9 @@ import com.app.dto.user.User;
 import com.app.dto.user.UserSearchCondition;
 import com.app.service.user.UserService;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -34,6 +35,7 @@ public class UserServiceImpl implements UserService {
 		//관리자 계정 추가할 때 필요한 체크 로직...
 		user.setUserType(CommonCode.USER_USERTYPE_ADMIN);
 		int result = userDAO.saveUser(user);
+		log.info("saveAdminUser 관리자 계정 추가 : {}",user);
 		return result;
 	}
 

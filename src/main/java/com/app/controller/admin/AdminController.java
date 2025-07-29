@@ -14,14 +14,18 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.app.dto.room.Room;
 import com.app.dto.room.RoomSearchCondition;
-import com.app.dto.room.RoomSearchCondition;
 import com.app.dto.user.User;
 import com.app.dto.user.UserSearchCondition;
 import com.app.service.room.RoomService;
 import com.app.service.user.UserService;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Controller
 public class AdminController {
+	
+	//private static final Logger log = LogManager.getLogger(AdminController.class);
 	
 	@Autowired
 	RoomService roomService;
@@ -31,6 +35,20 @@ public class AdminController {
 	
 	@GetMapping("/admin/registerRoom")
 	public String registerRoom() {
+		
+		System.out.println("이건 println");
+		log.info("이건 log.info 레벨 기록");
+		
+		log.error("로그 log error 레벨");
+		log.warn("경고 warning");
+		log.debug("debug level 로그");
+		log.trace("trace level 로그");
+		
+		log.info("집에 들어갔다");
+		log.debug("문을 열고 들어가서, 신발을 벗었다");
+		log.info("손을 씻엇다");
+		log.debug("핸드워시로 1분동안 깨끗이 씻었다");
+		log.info("침대에 누웠다");
 		
 		return "admin/registerRoom";
 	}
@@ -45,7 +63,9 @@ public class AdminController {
 		int result = roomService.saveRoom(room);
 		System.out.println(result);
 		
-		if(result > 0) { //정상적으로 저장 성공
+		if(result > 0) { //정상적으로 저장 성공			
+			log.info("registerRoom saveRoom 정보 저장: {}", room);
+			
 			return "redirect:/admin/rooms";
 		} else { //저장 실패
 			return "admin/registerRoom";
