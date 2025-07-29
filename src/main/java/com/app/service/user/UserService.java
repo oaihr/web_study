@@ -23,4 +23,6 @@ public interface UserService {
 	public int modifyUserInfo(User user);
 	
 	public List<User> findUserListBySearchCondition(UserSearchCondition userSearchCondition);
+	
+	public boolean isDuplicatedId(String id);
 }
