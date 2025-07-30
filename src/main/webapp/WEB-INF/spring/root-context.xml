@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans
-http://www.springframework.org/schema/beans/spring-beans.xsd">
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns:util="http://www.springframework.org/schema/util"
+xmlns:task="http://www.springframework.org/schema/task"
+xmlns:context="http://www.springframework.org/schema/context"
 
+xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans.xsd
+http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.0.xsd
+http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.1.xsd
+http://www.springframework.org/schema/context
+http://www.springframework.org/schema/context/spring-context.xsd">
 
 	<!-- ioc 컨테이너에 빈 등록 -->
 	<!-- roomDAO bean 등록 -->
@@ -42,4 +49,18 @@ http://www.springframework.org/schema/beans/spring-beans.xsd">
 	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
 		<constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory" />
 	</bean>
+
+	<bean id="sampleScheduler" class="com.app.scheduler.DailySalesScheduler" />
+	<task:scheduler id="mainScheduler" pool-size="10" />
+	<task:executor id="mainTaskExecutor" pool-size="10" />
+	<task:annotation-driven	executor="mainTaskExecutor" scheduler="mainScheduler" />
+	
+	<context:component-scan base-package="com.app.service"></context:component-scan>
+	<context:component-scan base-package="com.app.dao"></context:component-scan>
+
+	<bean id="sampleScheduler" class="com.app.scheduler.DailySalesScheduler" />
+	<task:scheduler id="mainScheduler" pool-size="10" />
+	<task:executor id="mainTaskExecutor" pool-size="10" />
+	<task:annotation-driven	executor="mainTaskExecutor" scheduler="mainScheduler" />
+	
 </beans>
