@@ -14,13 +14,13 @@ public class LoginInterceptor implements HandlerInterceptor {
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		
-		System.out.println("여기는 인터셉터 preHandel");
-		//로그인 안했으면? 진행 X -> 로그인 해라
-		if(LoginManager.isLogin(request) == false) { //로그인 안한 상태!
-			response.sendRedirect("/customer/signin"); //로그인 화면으로 리다이렉트
-			return false; //이후 과정 진행X
-		}
-		//로그인 했으면? 그냥 진행
+//		System.out.println("여기는 인터셉터 preHandel");
+//		//로그인 안했으면? 진행 X -> 로그인 해라
+//		if(LoginManager.isLogin(request) == false) { //로그인 안한 상태!
+//			response.sendRedirect("/customer/signin"); //로그인 화면으로 리다이렉트
+//			return false; //이후 과정 진행X
+//		}
+//		//로그인 했으면? 그냥 진행
 		
 		return HandlerInterceptor.super.preHandle(request, response, handler);
 	}

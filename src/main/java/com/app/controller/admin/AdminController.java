@@ -157,6 +157,15 @@ public class AdminController {
 	@PostMapping("/admin/users/add")
 	public String addUserAction(@ModelAttribute User user) {
 		
+		//서버에서 Insert 처리 전에 유효성 검증
+		if(user.getId() == null || user.getId().trim() == "") {
+			return "admin/registerUser";
+		}
+		if( user.getId().length() < 2 || user.getId().length() > 15){
+			return "admin/registerUser";
+		}
+		
+		
 		//저장 처리 진행
 //		int result = userService.saveUser(user);
 		

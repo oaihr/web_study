@@ -69,6 +69,7 @@
 		<interceptor>
 			<mapping path="/admin/**"/>
 			<exclude-mapping path="/admin/signin" />
+			<exclude-mapping path="/admin/users/add"/>
 			<beans:bean class="com.app.interceptor.AdminInterceptor"></beans:bean>
 		</interceptor>
 	</interceptors>
