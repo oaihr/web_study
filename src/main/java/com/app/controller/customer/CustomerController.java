@@ -10,7 +10,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,6 +26,7 @@ import com.app.dto.user.User;
 import com.app.dto.user.UserDupCheck;
 import com.app.service.user.UserService;
 import com.app.util.LoginManager;
+import com.app.validator.UserValidator;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -68,6 +71,12 @@ public class CustomerController {
 			System.out.println("회원가입 실패");
 			return "customer/signup";
 		}		
+	}
+	
+	@InitBinder("user")
+	public void initUserBinder(WebDataBinder binder){
+		UserValidator userValidator = new UserValidator();
+		binder.setValidator(userValidator);
 	}
 	
 	@ResponseBody
