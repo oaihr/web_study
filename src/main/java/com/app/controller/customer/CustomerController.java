@@ -1,11 +1,17 @@
 package com.app.controller.customer;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -36,7 +42,24 @@ public class CustomerController {
 	}
 	
 	@PostMapping("/customer/signup")
-	public String signupAction(User user) {
+	public String signupAction(@Valid @ModelAttribute User user, BindingResult br) {
+								//유효성검사			검사 결과
+		
+		//검증 결과에 문제가 있냐 없냐
+		if(br.hasErrors()) { //문제O
+			//문제 내용을 출력
+			List<ObjectError> errorList = br.getAllErrors();
+			for(ObjectError er : errorList) {
+				System.out.println(er.getObjectName());
+				System.out.println(er.getDefaultMessage());
+				System.out.println(er.getCode());
+				System.out.println(er.getCodes()[0]);
+			}
+			return "customer/signup";
+		}
+		
+		
+		
 		int result = userService.saveCustomerUser(user);
 		if(result>0) {
 			System.out.println("회원가입 완료");
