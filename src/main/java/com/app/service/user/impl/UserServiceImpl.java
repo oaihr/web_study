@@ -9,7 +9,9 @@ import com.app.common.CommonCode;
 import com.app.dao.user.UserDAO;
 import com.app.dto.user.User;
 import com.app.dto.user.UserSearchCondition;
+import com.app.dto.user.UserValidError;
 import com.app.service.user.UserService;
+import com.app.validator.UserCustomValidator;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -42,6 +44,10 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public int saveCustomerUser(User user) {
 		//사용자 계정 추가할 때 필요한 체크 로직...
+		
+//		UserValidError userValidError = new UserValidError();		
+//		if(UserCustomValidator.validate(user, userValidError) == false) {
+//		}
 		user.setUserType(CommonCode.USER_USERTYPE_CUSTOMER);
 		int result = userDAO.saveUser(user);
 		return result;
