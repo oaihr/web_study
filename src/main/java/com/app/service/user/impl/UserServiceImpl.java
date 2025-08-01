@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.app.common.CommonCode;
 import com.app.dao.user.UserDAO;
 import com.app.dto.user.User;
+import com.app.dto.user.UserProfileImage;
 import com.app.dto.user.UserSearchCondition;
 import com.app.dto.user.UserValidError;
 import com.app.service.user.UserService;
@@ -130,6 +131,19 @@ public class UserServiceImpl implements UserService {
 		}else{ // 아이디 객체가 있다 -> id값이 pk로 사용되고 있다 -> 중복 O
 			return true;
 		}
+	}
+
+	@Override
+	public int saveUserProfileImage(UserProfileImage userProfileImage) {
+		int result = userDAO.saveUserProfileImage(userProfileImage);
+		return result;
+	}
+
+	@Override
+	public UserProfileImage findUserProfileImageById(String id) {
+		
+		UserProfileImage userProfileImage = userDAO.findUserProfileImageById(id);
+		return userProfileImage;
 	}
 }
 

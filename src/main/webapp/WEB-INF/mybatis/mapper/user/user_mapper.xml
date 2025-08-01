@@ -145,4 +145,20 @@
 		<!-- AND user_type = #{userType} -->
 		<!-- </if> -->
 	</select>
+	
+	<insert id="saveUserProfileImage" parameterType="UserProfileImage">
+		INSERT INTO USER_PROFILE_IMAGE
+			VALUES(
+				#{id},
+				#{fileName}
+			)
+	</insert>
+	
+	<select id="findUserProfileImageById" parameterType="String" resultType="UserProfileImage">
+		SELECT *
+		FROM user_profile_image
+		WHERE id = #{id}
+	</select>
 </mapper>
+
+

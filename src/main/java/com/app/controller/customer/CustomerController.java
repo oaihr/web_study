@@ -1,5 +1,8 @@
 package com.app.controller.customer;
 
+import java.io.IOException;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,16 +13,23 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.app.common.ApiCommonCode;
 import com.app.common.CommonCode;
 import com.app.dto.api.ApiResponse;
 import com.app.dto.api.ApiResponseHeader;
+import com.app.dto.file.FileInfo;
 import com.app.dto.user.User;
 import com.app.dto.user.UserDupCheck;
+import com.app.dto.user.UserProfileImage;
+import com.app.dto.user.UserProfileRequestForm;
 import com.app.dto.user.UserValidError;
+import com.app.service.file.FileService;
 import com.app.service.user.UserService;
+import com.app.util.FileManager;
 import com.app.util.LoginManager;
 import com.app.validator.UserCustomValidator;
 
@@ -33,6 +43,10 @@ public class CustomerController {
 	
 	@Autowired
 	UserService userService;
+	
+	@Autowired
+	FileService fileService;
+	
 	
 	@GetMapping("/customer/signup")
 	public String signup() {		
@@ -186,6 +200,17 @@ public class CustomerController {
 			//그 ID에 해당하는 사용자 정보 -> view에 전달
 			model.addAttribute("user", user);
 			
+			//현재 mypage 접속한 사용자가 프로필 사진이 있으면?
+			//프로필 파일 정보도 같이 view에 전달
+			
+			//userService.findUserProfileImageById(loginUserId);
+			UserProfileImage userProfileImage = userService.findUserProfileImageById(user.getId());
+			if(userProfileImage != null) { //이미지 등록되어 있음
+				FileInfo fileInfo = fileService.findFileInfoByFileName(userProfileImage.getFileName());
+				model.addAttribute("fileInfo", fileInfo);
+				
+			}
+			
 			return "customer/mypage";
 		}
 		//그게 아니면? 로그인이 안된 상태 -> 로그인페이지로 이동	
@@ -230,6 +255,82 @@ public class CustomerController {
 		return "customer/modifyPw";
 	}
 	
+	@PostMapping("/customer/profile")
+	public String profileAction(HttpServletRequest request,  @RequestParam("profileImage") MultipartFile file) {
+		
+		System.out.println(request.getParameter("id"));
+		System.out.println(request.getParameter("name"));
+		
+		//MultipartFile file = multipartRequest.getFile("profileImage");
+		
+		System.out.println(file.getName());
+		System.out.println(file.getOriginalFilename());
+		System.out.println(file.isEmpty());
+		System.out.println(file.getContentType());
+		System.out.println(file.getSize());
+		
+		return "redirect:/customer/mypage";
+	}
 	
-	
+	@PostMapping("/customer/profiledto")
+	public String profileAction(UserProfileRequestForm userProfileRequestForm) {
+		
+		System.out.println(userProfileRequestForm.getId());
+		System.out.println(userProfileRequestForm.getName());
+		
+		MultipartFile file = userProfileRequestForm.getProfileImage();
+		//첨부파일 수신 확인
+		
+		//첨부파일에 대한 정보 확인
+		System.out.println(file.getName());
+		System.out.println(file.getOriginalFilename());
+		System.out.println(file.isEmpty());
+		System.out.println(file.getContentType());
+		System.out.println(file.getSize());
+		
+		// 1 첨부된 파일을 저장소에 실제로 저장
+		
+		/*
+		// 코드로 자체 저장
+		try {
+			file.transferTo(new File("D:/fileStorage/" + file.getOriginalFilename()));
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		*/
+		
+		// FileManager 클래스 활용
+		// 2 저장된 파일에 대한 정보 + 처리해야하는 요청 정보 -> DB 저장
+		
+		try {
+			
+			//실제 저장폴더 경로에 파일이 저장된다
+			FileInfo fileInfo = FileManager.storeFile(file);
+			
+			//저장된 파일 정보를 DB에 저장!
+			int result = fileService.saveFileInfo(fileInfo);
+			
+			if(result > 0) { //실제파일저장 -> DB에 파일정보 저장 
+				//어떤 사용자의 프로필 사진인지 DB 저장!
+				
+				UserProfileImage userProfileImage = new UserProfileImage();
+				userProfileImage.setId(userProfileRequestForm.getId());
+				userProfileImage.setFileName(fileInfo.getFileName());
+				
+				int result2 = userService.saveUserProfileImage(userProfileImage);
+			}
+			
+			
+		} catch (IllegalStateException e) {
+			// 안됐을 때 보여줄 정보, 실패시 보여줄 화면
+			e.printStackTrace();
+		} catch (IOException e) {
+			// 안됐을 때 보여줄 정보, 실패시 보여줄 화면
+			e.printStackTrace();
+		}
+		
+		return "redirect:/customer/mypage";
+	}
 }
